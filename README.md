@@ -10,7 +10,7 @@
 
 ## Installation
 
-1. Download and extract the addon folder into your `World of Warcraft/_retail_/Interface/AddOns/` directory.
+1. Download and extract the addon folder into your `World of Warcraft/_retail_/Interface/AddOns/` directory. (or any other version e.g. _anniversary_, _classic_era_)
 2. Reload your UI or restart the game.
 
 ## Usage
