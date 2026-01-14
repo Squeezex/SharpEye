@@ -1,39 +1,41 @@
--- Check if LibStub, LibDataBroker and LibDBIcon are available
-local LDB = LibStub("LibDataBroker-1.1", true)
-local LDBIcon = LibStub("LibDBIcon-1.0", true)
+local addonName = ...
 
-if not LDB or not LDBIcon then
-    print("|cffff0000[SharpEye]|r LibDataBroker or LibDBIcon not found!")
-    return
-end
+-- Check if LibStub, LibDataBroker and LibDBIcon are available
+local LDB = LibStub("LibDataBroker-1.1")
+local LDBIcon = LibStub("LibDBIcon-1.0")
+
+
+-- SavedVariables must exist
+SharpEyeDB = SharpEyeDB or {}
+SharpEyeDB.minimap = SharpEyeDB.minimap or {}
+
 
 -- Set the icon ID (can be changed)
 local ICON_ID = "INV_Misc_Eye_01"
 
--- Setup saved variables for LibDBIcon
-SharpEyeDB = SharpEyeDB or {}
 
 -- Create the LDB object
-local dataobj = LDB:NewDataObject("SharpEye", {
-    type = "data source",
+-- Toggle the ResampleAlwaysSharpen CVar
+local ldbLauncher = LDB:NewDataObject("SharpEye", {
+    type = "launcher",
+    text = "SharpEye",
     icon = "Interface\\Icons\\"..ICON_ID,
-    label = "SharpEye",
     OnClick = function(self, button)
-        -- Toggle the ResampleAlwaysSharpen CVar
         local state = not GetCVarBool("ResampleAlwaysSharpen")
         SetCVar("ResampleAlwaysSharpen", state)
-
-        if state then
-            print("|cff00ff00Sharpen enabled|r")
-        else
-            print("|cffff0000Sharpen disabled|r")
-        end
+        print(state and "|cff00ff00Sharpen enabled|r" or "|cffff0000Sharpen disabled|r")
     end,
-    OnTooltipShow = function(tooltip)
-        tooltip:AddLine("SharpEye")
-        tooltip:AddLine("Click: toggle ResampleAlwaysSharpen")
+    OnTooltipShow = function(tt)
+        tt:AddLine("SharpEye")
+        tt:AddLine("Click: toggle ResampleAlwaysSharpen")
     end,
 })
 
--- Register the icon with LibDBIcon
-LDBIcon:Register("SharpEye", dataobj, SharpEyeDB)
+-- Register after ADDON_LOADED
+local frame = CreateFrame("Frame")
+frame:RegisterEvent("ADDON_LOADED")
+frame:SetScript("OnEvent", function(self, event, name)
+    if name == addonName then
+        LDBIcon:Register("SharpEye", ldbLauncher, SharpEyeDB.minimap)
+    end
+end)
