@@ -1,7 +1,7 @@
-## Interface: 110200, 20505 
+## Interface: 120000, 120001, 110200, 20505 
 ## Title: SharpEye
 ## Notes: Toggle ResampleAlwaysSharpen via a simple minimap button
 ## Author: Squeezex
-## Version: 1.1
+## Version: 1.2
 ## SavedVariables: SharpEyeDB
 SharpEye.lua
