@@ -2,6 +2,6 @@
 ## Title: SharpEye
 ## Notes: Toggle ResampleAlwaysSharpen via a simple minimap button
 ## Author: Squeezex
-## Version: 1.2
+## Version: 1.3
 ## SavedVariables: SharpEyeDB
 SharpEye.lua
